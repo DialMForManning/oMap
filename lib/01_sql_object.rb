@@ -82,7 +82,6 @@ class SQLObject
   end
 
   def insert
-    cols_no_id = self.class.columns.drop(1)
     col_names = cols_no_id.map(&:to_s).join(",")
     question_marks = (["?"]*cols_no_id.length).join(",")
 
@@ -94,14 +93,27 @@ class SQLObject
     SQL
 
     self.id = DBConnection.last_insert_row_id
-
   end
 
   def update
-    # ...
+    set_cols = cols_no_id.map { |name| "#{name} = ?" }.join(",")
+
+    DBConnection.execute(<<-SQL, *attribute_values.drop(1), self.id)
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{set_cols}
+      WHERE
+        id = ?
+    SQL
   end
 
   def save
-    # ...
+    id.nil? ? insert : update
+  end
+
+  private
+  def cols_no_id
+    self.class.columns.drop(1)
   end
 end
