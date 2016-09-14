@@ -31,8 +31,7 @@ class SQLObject
   end
 
   def self.table_name
-    name = self.to_s.split /(?=[A-Z])/
-    "#{name.map(&:downcase).join('_')}s"
+    @table_name || self.name.underscore.pluralize
   end
 
   def self.all
