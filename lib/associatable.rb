@@ -2,11 +2,7 @@ require_relative 'searchable'
 require 'active_support/inflector'
 
 class AssocOptions
-  attr_accessor(
-    :foreign_key,
-    :class_name,
-    :primary_key
-  )
+  attr_accessor :foreign_key, :class_name, :primary_key
 
   def model_class
     self.class_name.constantize
@@ -52,11 +48,10 @@ module Associatable
     define_method(name) do
       belongs_options = self.class.assoc_options[name]
       foreign_key_val = self.send(belongs_options.foreign_key)
-
       target_class = belongs_options.model_class
+      
       target_class.where(belongs_options.primary_key => foreign_key_val).first
     end
-
   end
 
   def has_many(name, options = {})
@@ -65,6 +60,7 @@ module Associatable
     define_method(name) do
       has_many_options = self.class.assoc_options[name]
       key_val = self.send(has_many_options.primary_key)
+
       has_many_options.model_class
         .where(has_many_options.foreign_key => key_val)
     end
