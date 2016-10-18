@@ -1,4 +1,3 @@
-require_relative 'searchable'
 require 'active_support/inflector'
 
 class AssocOptions
@@ -49,7 +48,7 @@ module Associatable
       belongs_options = self.class.assoc_options[name]
       foreign_key_val = self.send(belongs_options.foreign_key)
       target_class = belongs_options.model_class
-      
+
       target_class.where(belongs_options.primary_key => foreign_key_val).first
     end
   end
@@ -101,8 +100,4 @@ module Associatable
       source_options.model_class.parse_all(search_results).first
     end
   end
-end
-
-class SQLObject
-  extend Associatable
 end
