@@ -3,6 +3,7 @@ require_all 'lib'
 
 class Book < SQLObject
   belongs_to :reader
+  belongs_to :library
 
   self.make_helpers!
 end
