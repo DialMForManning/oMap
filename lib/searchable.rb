@@ -2,7 +2,6 @@ require_relative 'db_connection'
 require_relative 'sql_object'
 
 module Searchable
-
   def where(params)
     where_string = params.map { |attr,param| "#{attr} = ?"}.join(" AND ")
 
@@ -16,7 +15,6 @@ module Searchable
     SQL
     parse_all(found)
   end
-
 end
 
 class SQLObject
