@@ -1,4 +1,4 @@
-require_relative '02_searchable'
+require_relative 'searchable'
 require 'active_support/inflector'
 
 # Phase IIIa

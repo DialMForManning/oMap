@@ -1,4 +1,4 @@
-require '01_sql_object'
+require 'sql_object'
 require 'db_connection'
 require 'securerandom'
 
@@ -6,7 +6,7 @@ describe SQLObject do
   before(:each) { DBConnection.reset }
   after(:each) { DBConnection.reset }
 
-  context 'before ::finalize!' do
+  context 'before ::make_helpers!' do
     before(:each) do
       class Cat < SQLObject
       end
@@ -65,16 +65,16 @@ describe SQLObject do
     end
   end
 
-  context 'after ::finalize!' do
+  context 'after ::make_helpers!' do
     before(:all) do
       class Cat < SQLObject
-        self.finalize!
+        self.make_helpers!
       end
 
       class Human < SQLObject
         self.table_name = 'humans'
 
-        self.finalize!
+        self.make_helpers!
       end
     end
 
@@ -83,7 +83,7 @@ describe SQLObject do
       Object.send(:remove_const, :Human)
     end
 
-    describe '::finalize!' do
+    describe '::make_helpers!' do
       it 'creates getter methods for each column' do
         c = Cat.new
         expect(c.respond_to? :something).to be false

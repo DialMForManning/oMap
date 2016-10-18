@@ -1,4 +1,4 @@
-require '02_searchable'
+require 'searchable'
 
 describe 'Searchable' do
   before(:each) { DBConnection.reset }
@@ -6,13 +6,13 @@ describe 'Searchable' do
 
   before(:all) do
     class Cat < SQLObject
-      finalize!
+      make_helpers!
     end
 
     class Human < SQLObject
       self.table_name = 'humans'
 
-      finalize!
+      make_helpers!
     end
   end
 

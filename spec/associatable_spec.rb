@@ -1,4 +1,4 @@
-require '03_associatable'
+require 'associatable'
 
 describe 'AssocOptions' do
   describe 'BelongsToOptions' do
@@ -48,13 +48,13 @@ describe 'AssocOptions' do
   describe 'AssocOptions' do
     before(:all) do
       class Cat < SQLObject
-        self.finalize!
+        self.make_helpers!
       end
 
       class Human < SQLObject
         self.table_name = 'humans'
 
-        self.finalize!
+        self.make_helpers!
       end
     end
 
@@ -65,7 +65,7 @@ describe 'AssocOptions' do
       options = HasManyOptions.new('cats', 'Human')
       expect(options.model_class).to eq(Cat)
     end
-    
+
     it '#table_name returns table name of associated object' do
       options = BelongsToOptions.new('human')
       expect(options.table_name).to eq('humans')
@@ -84,7 +84,7 @@ describe 'Associatable' do
     class Cat < SQLObject
       belongs_to :human, foreign_key: :owner_id
 
-      finalize!
+      make_helpers!
     end
 
     class Human < SQLObject
@@ -93,13 +93,13 @@ describe 'Associatable' do
       has_many :cats, foreign_key: :owner_id
       belongs_to :house
 
-      finalize!
+      make_helpers!
     end
 
     class House < SQLObject
       has_many :humans
 
-      finalize!
+      make_helpers!
     end
   end
 

@@ -1,4 +1,4 @@
-require '04_associatable2'
+require 'associatable2'
 
 describe 'Associatable' do
   before(:each) { DBConnection.reset }
@@ -8,7 +8,7 @@ describe 'Associatable' do
     class Cat < SQLObject
       belongs_to :human, foreign_key: :owner_id
 
-      finalize!
+      make_helpers!
     end
 
     class Human < SQLObject
@@ -17,13 +17,13 @@ describe 'Associatable' do
       has_many :cats, foreign_key: :owner_id
       belongs_to :house
 
-      finalize!
+      make_helpers!
     end
 
     class House < SQLObject
       has_many :humans
 
-      finalize!
+      make_helpers!
     end
   end
 
@@ -59,7 +59,7 @@ describe 'Associatable' do
       class Cat
         has_one_through :home, :human, :house
 
-        self.finalize!
+        self.make_helpers!
       end
     end
 
