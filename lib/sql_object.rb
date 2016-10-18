@@ -32,18 +32,18 @@ class SQLObject
   end
 
   def self.all
-    all_hashes = DBConnection.execute(<<-SQL)
+    entries = DBConnection.execute(<<-SQL)
       SELECT
         #{table_name}.*
       FROM
         #{table_name}
     SQL
 
-    parse_all(all_hashes)
+    parse_all(entries)
   end
 
-  def self.parse_all(results)
-    results.map { |attrs_hash| self.new(attrs_hash) }
+  def self.parse_all(attrs)
+    attrs.map { |attr_hash| self.new(attr_hash) }
   end
 
   def self.find(id)
